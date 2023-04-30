@@ -1,0 +1,26 @@
+<section class="p-4 bg-white rounded shadow">
+     <form action="" [formGroup]="Addfrom" (ngSubmit)="sendData()">
+        <h2 class="text-center display-4">Note Data</h2>
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Title</mat-label>
+            <input formControlName="title" matInput placeholder="Ex. Note1" >
+            <mat-error *ngIf="Addfrom.get('title')?.hasError('required')">
+              title is <strong>required</strong>
+          </mat-error>
+          </mat-form-field>
+
+
+        
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Leave a Note</mat-label>
+            <textarea  formControlName="desc" matInput placeholder="Ex. It makes me feel..."></textarea>
+            <mat-error *ngIf="Addfrom.get('desc')?.hasError('required')">
+              desc is <strong>required</strong>
+          </mat-error>
+          </mat-form-field>
+        
+          <button *ngIf="!data" [disabled]="Addfrom.invalid" type="submit" mat-raised-button color="primary">Add Note</button>
+          <button *ngIf="data" [disabled]="Addfrom.invalid" type="submit" mat-raised-button color="warn">Update</button>
+
+     </form>
+</section>

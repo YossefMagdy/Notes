@@ -1,0 +1,44 @@
+<header class="py-4">
+  <mat-form-field *ngIf="notes.length>0" class="col-md-10 mx-auto d-block" appearance="outline">
+    <mat-label>search input</mat-label>
+    <input matInput type="text" [(ngModel)]="value">
+    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <div class="hstack justify-content-end">
+    <button (click)="openDialog()" mat-raised-button color="primary">Add Note</button>
+
+  </div>
+</header>
+
+<section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+  <div class="col" *ngFor="let note of notes|filter:value;let i=index">
+    <div class="card h-100 shadow">
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="position-absolute end-0"
+        aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button (click)="UpdateNote(note)" mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Update</span>
+        </button>
+        <button [swal]="deleteSwal" mat-menu-item>
+          <mat-icon>delete_outline</mat-icon>
+          <span>Delete</span>
+        </button>
+
+
+        <swal #deleteSwal title="Delete {{ note.title }}?" text="" icon="question"
+          [showCancelButton]="true" [focusCancel]="true" (confirm)="deleteNote(note._id,i)">
+        </swal>
+
+      </mat-menu>
+      <div class="card-body">
+        <h3 class="h6 px-3">{{note.title}}</h3>
+        <p class="small text-muted">{{note.desc}}</p>
+      </div>
+    </div>
+  </div>
+</section>
